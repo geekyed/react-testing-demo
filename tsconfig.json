@@ -1,0 +1,23 @@
+{
+    "compilerOptions": {
+        "sourceMap": true,          // allow sourcemap support
+        "strict": false,
+        "strictNullChecks": true,   // enable strict null checks as a best practice
+        "noImplicitAny": true,
+        "resolveJsonModule": true,
+        "module": "es2020",
+        "lib": ["ESNext", "DOM"],
+        "moduleResolution": "node",          // specify module code generation
+        "jsx": "react-jsx",             // use typescript to transpile jsx to js
+        "target": "es6",            // specify ECMAScript target version
+        "allowJs": true,             // allow a partial TypeScript and JavaScript codebase
+        "baseUrl": "src",
+        "allowSyntheticDefaultImports": true,
+        "downlevelIteration": true,
+        "types" : ["jest"],
+        "noUncheckedIndexedAccess": true
+    },
+    "include": [
+        "./src/**/*"
+    ],
+}
