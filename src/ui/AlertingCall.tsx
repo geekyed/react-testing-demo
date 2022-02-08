@@ -1,4 +1,9 @@
-const AlertingCall = ({ accept, reject}) => {
+type AlertingCallProps = {
+    accept: () => void,
+    reject: () => void
+}
+
+const AlertingCall = ({ accept, reject }: AlertingCallProps) => {
     return (
         <div>
             <button onClick={accept}>Accept</button>
