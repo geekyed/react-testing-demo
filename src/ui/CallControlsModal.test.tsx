@@ -3,7 +3,7 @@ import userEvent from '@testing-library/user-event'
 import '@testing-library/jest-dom'
 
 import CallControlsModal from './CallControlsModal'
-import { accept, reject, mute, hangup } from '../callIntegration'
+import { accept } from '../callIntegration'
 
 jest.mock('../callIntegration', () => ({
   accept: jest.fn(),
@@ -33,8 +33,6 @@ describe('Loading the initial page', () => {
 // What If i have more than one button on the page? GetByRole Throws when It matches more than 1.
 
 describe('When I click Make Call', () => {
-
-  let buttons: HTMLElement[]
   beforeEach(() => {
     render(<CallControlsModal />)
 
