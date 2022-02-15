@@ -15,43 +15,38 @@ jest.mock('../callIntegration', () => ({
 
 // Demo approaches to finding elements.
 
-describe('Loading the initial page', () => {
-  beforeEach(() => {
-    render(<CallControlsModal />)
-  })
+test('Loading the initial page renders a make a call header', () => {
+  render(<CallControlsModal />)
 
-  it('renders a useful header', () => {
-    expect(screen.getByText('Make A Call')).toBeTruthy()
-  })
-
-  it('will show a make call button', () => {
-    expect(screen.getByText('Make Call')).toBeTruthy()
-  })
+  expect(screen.getByText('Make A Call')).toBeTruthy()
 })
 
+test('Loading the initial page renders a make call button', () => {
+  render(<CallControlsModal />)
+
+  expect(screen.getByText('Make Call')).toBeTruthy()
+})
+
+test('When I type a number it appears', () => {
+  render(<CallControlsModal />)
+
+  userEvent.type(screen.getByLabelText('Number'), '07411110205')
+
+  console.log(prettyDOM(screen.getByLabelText('Number')))
+
+  expect(screen.getByLabelText('Number')).toHaveTextContent('07411110205')
+  // expect(screen.getByLabelText('Number')).toHaveValue('07411110205')
+})
 
 // What If i have more than one button on the page? GetByRole Throws when It matches more than 1.
+test('When I click Make Call, Accept and Reject are shown', () => {
+  render(<CallControlsModal />)
+  userEvent.type(screen.getByLabelText('Number'), '07411110205')
 
-describe('When I click Make Call', () => {
-  beforeEach(() => {
-    render(<CallControlsModal />)
+  userEvent.click(screen.getByText('Make Call'))
 
-    userEvent.type(screen.getByLabelText('Number'), '07411110205')
-
-    // expect(screen.getByLabelText('Number')).toHaveTextContent('07411110205')
-    expect(screen.getByLabelText('Number')).toHaveValue('07411110205')
-
-    // console.log(prettyDOM(screen.getByLabelText('Number')))
-    userEvent.click(screen.getByText('Make Call'))
-  })
-
-  it('shows an Accept button', () => {
-    screen.getByText('Accept')
-  })
-
-  it('shows an Reject button ', () => {
-    screen.getByText('Reject')
-  })
+  screen.getByText('Accept')
+  screen.getByText('Reject')
 })
 
 describe('When I click Accept', () => {
