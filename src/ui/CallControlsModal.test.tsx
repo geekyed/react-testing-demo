@@ -32,10 +32,10 @@ test('When I type a number it appears', () => {
 
   userEvent.type(screen.getByLabelText('Number'), '07411110205')
 
-  console.log(prettyDOM(screen.getByLabelText('Number')))
+  // console.log(prettyDOM(screen.getByLabelText('Number')))
 
-  expect(screen.getByLabelText('Number')).toHaveTextContent('07411110205')
-  // expect(screen.getByLabelText('Number')).toHaveValue('07411110205')
+  // expect(screen.getByLabelText('Number')).toHaveTextContent('07411110205')
+  expect(screen.getByLabelText('Number')).toHaveValue('07411110205')
 })
 
 // What If i have more than one button on the page? GetByRole Throws when It matches more than 1.
