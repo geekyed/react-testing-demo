@@ -13,8 +13,6 @@ jest.mock('../callIntegration', () => ({
   makePhoneCall: jest.fn()
 }))
 
-// Demo approaches to finding elements.
-
 test('Loading the initial page renders a make a call header', () => {
   render(<CallControlsModal />)
 
