@@ -49,40 +49,21 @@ test('When I click Make Call, Accept and Reject are shown', () => {
   screen.getByText('Reject')
 })
 
-describe('When I click Accept', () => {
-  beforeEach(async () => {
-    render(<CallControlsModal />)
-    await waitFor(() => screen.getByText('Make Call'))
-    userEvent.click(screen.getByText('Make Call'))
+test('Clicking accept, accepts the call', async () => {
+  render(<CallControlsModal />)
+  userEvent.click(screen.getByText('Make Call'))
 
-    await waitFor(() => screen.getByText('Accept'))
-    userEvent.click(screen.getByText('Accept'))
+  await waitFor(() => screen.getByText('Accept'))
+  userEvent.click(screen.getByText('Accept'))
 
-  })
+  expect(accept).toBeCalledTimes(1)
 
-  it('the accept functionality is executed.', () => {
-    expect(accept).toBeCalledTimes(1)
-  })
+  await waitFor(() => screen.getByText('Mute'))
+  expect(screen.getByText('Mute')).toBeTruthy()
+  expect(screen.getByText('Hangup')).toBeTruthy()
+
+
 })
-
-describe('Accept Renders the correct page', () => {
-  beforeEach(async () => {
-    render(<CallControlsModal />)
-    userEvent.click(screen.getByText('Make Call'))
-
-    await waitFor(() => screen.getByText('Accept'))
-    userEvent.click(screen.getByText('Accept'))
-  })
-
-  it('shows an Mute button.', () => {
-    expect(screen.getByText('Mute')).toBeTruthy()
-  })
-
-  it('shows an Hangup button.', () => {
-    expect(screen.getByText('Hangup')).toBeTruthy()
-  })
-})
-
 
 // describe('When I click Reject', () => {
 //     beforeEach(() => {
