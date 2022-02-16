@@ -3,7 +3,7 @@ import userEvent from '@testing-library/user-event'
 import '@testing-library/jest-dom'
 
 import CallControlsModal from './CallControlsModal'
-import { accept } from '../callIntegration'
+import { accept, reject } from '../callIntegration'
 
 jest.mock('../callIntegration', () => ({
   accept: jest.fn(),
@@ -65,14 +65,17 @@ test('Clicking accept, accepts the call', async () => {
 
 })
 
-// describe('When I click Reject', () => {
-//     beforeEach(() => {
-//         render(<CallControlsModal />)
-//         userEvent.click(screen.getByText('Make Call'))
-//         userEvent.click(screen.getByText('Reject'))
-//     })
+test('Clicking reject, rejects the call', async () => {
+  render(<CallControlsModal />)
+  userEvent.click(screen.getByText('Make Call'))
 
-//     it('the accept functionality is executed.', () => {
-//         expect(reject).toBeCalledTimes(1)
-//     })
-// })
+  await waitFor(() => screen.getByText('Reject'))
+  userEvent.click(screen.getByText('Reject'))
+
+  expect(reject).toBeCalledTimes(1)
+
+  await waitFor(() => screen.getByText('Make Call'))
+  expect(screen.getByText('Number')).toBeTruthy()
+
+
+})
