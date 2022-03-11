@@ -1,9 +1,25 @@
-type DtmfDigit = '1' | '2' | '3' | '4' | '5' | '6' | '7' | '8' | '9' | '0' | '*' | '#'
+const sleep = (milliseconds: number): Promise<void> => {
+    return new Promise(resolve => setTimeout(resolve, milliseconds))
+}
 
-const accept = () => console.log('Call Accepted')
-const reject = () => console.log('Call Rejected')
-const mute = (isMuted: boolean) => isMuted ? console.log('Call Muted') : console.log('Call  Un-Muted')
-const hangup = () => console.log('Call Hung Up')
-const makePhoneCall = (phoneNo: string) => console.log('dialled:', phoneNo)
+export const accept = async (): Promise<void> => {
+    console.log('Call Accepted')
+    await sleep(1000)
+}
 
-export { accept, reject, mute, hangup, makePhoneCall }
+export const reject = async (): Promise<void> => {
+    console.log('Call Rejected')
+    await sleep(1000)
+}
+
+export const mute = async (isMuted: boolean): Promise<void> => {
+    isMuted ? console.log('Call Muted') : console.log('Call  Un-Muted')
+    await sleep(1000)
+}
+
+export const hangup = async (): Promise<void> => {
+    console.log('Call Hung Up')
+    await sleep(1000)
+}
+
+export const makePhoneCall = (phoneNo: string) => console.log('dialled:', phoneNo)
