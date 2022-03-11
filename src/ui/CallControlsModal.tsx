@@ -15,18 +15,18 @@ enum CallState {
 const WebRTCControlsModal = () => {
   const [callState, setCallState] = useState(CallState.Idle)
 
-  const acceptCall = () => {
-    accept()
+  const acceptCall = async () => {
+    await accept()
     setCallState(CallState.Connected)
   }
 
-  const rejectCall = () => {
-    reject()
+  const rejectCall = async () => {
+    await reject()
     setCallState(CallState.Idle)
   }
 
-  const hangupCall = () => {
-    hangup()
+  const hangupCall = async () => {
+    await hangup()
     setCallState(CallState.Idle)
   }
 

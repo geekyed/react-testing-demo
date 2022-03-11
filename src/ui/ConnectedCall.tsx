@@ -2,14 +2,14 @@ import { useState } from 'react'
 
 type ConnectedCallProps = {
   hangup: () => void,
-  mute: (isMuted: boolean) => void
+  mute: (isMuted: boolean) => Promise<void>
 }
 
 const ConnectedCall = ({ hangup, mute }: ConnectedCallProps) => {
   const [muted, setMuted] = useState(false)
 
-  const muteCall = () => {
-    mute(!muted)
+  const muteCall = async () => {
+    await mute(!muted)
     setMuted(!muted)
   }
 
