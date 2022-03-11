@@ -1,9 +1,10 @@
-import { prettyDOM, render, screen, waitFor } from '@testing-library/react'
+// import '@testing-library/jest-dom'
+import { render, screen, waitFor } from '@testing-library/react'
 import userEvent from '@testing-library/user-event'
 import '@testing-library/jest-dom'
-
 import CallControlsModal from './CallControlsModal'
-import { accept, reject } from '../callIntegration'
+import { accept } from '../callIntegration'
+
 
 jest.mock('../callIntegration', () => ({
   accept: jest.fn(),
@@ -16,64 +17,43 @@ jest.mock('../callIntegration', () => ({
 test('Loading the initial page renders a make a call header', () => {
   render(<CallControlsModal />)
 
-  expect(screen.getByText('Make A Call')).toBeTruthy()
-})
-
-test('Loading the initial page renders a make call button', () => {
-  render(<CallControlsModal />)
-
-  expect(screen.getByText('Make Call')).toBeTruthy()
+  expect(screen.getByText('Make A Call')).toBeInTheDocument()
 })
 
 test('When I type a number it appears', () => {
   render(<CallControlsModal />)
 
-  userEvent.type(screen.getByLabelText('Number'), '07411110205')
+  userEvent.type(screen.getByLabelText('Number'), '999')
 
-  // console.log(prettyDOM(screen.getByLabelText('Number')))
-
-  // expect(screen.getByLabelText('Number')).toHaveTextContent('07411110205')
-  expect(screen.getByLabelText('Number')).toHaveValue('07411110205')
+  expect(screen.getByLabelText('Number')).toHaveValue('999')
 })
 
-// What If i have more than one button on the page? GetByRole Throws when It matches more than 1.
-test('When I click Make Call, Accept and Reject are shown', () => {
+test('When I click make call we have a ringing call.', () => {
   render(<CallControlsModal />)
-  userEvent.type(screen.getByLabelText('Number'), '07411110205')
 
+  userEvent.type(screen.getByLabelText('Number'), '999')
   userEvent.click(screen.getByText('Make Call'))
 
-  screen.getByText('Accept')
-  screen.getByText('Reject')
+  const buttonsOnPage = screen.getAllByRole('button')
+  expect(buttonsOnPage[0]).toHaveTextContent('Accept')
+  expect(buttonsOnPage.find(button => button.textContent === 'Accept'))
+
+  expect(screen.getByText('Accept')).toBeInTheDocument()
+  expect(screen.getByText('Reject')).toBeInTheDocument()
 })
 
-test('Clicking accept, accepts the call', async () => {
+test('When I click accept we have a active call and accept is called.', async () => {
   render(<CallControlsModal />)
+
+  userEvent.type(screen.getByLabelText('Number'), '999')
   userEvent.click(screen.getByText('Make Call'))
 
-  await waitFor(() => screen.getByText('Accept'))
+
   userEvent.click(screen.getByText('Accept'))
-
   expect(accept).toBeCalledTimes(1)
 
-  await waitFor(() => screen.getByText('Mute'))
-  expect(screen.getByText('Mute')).toBeTruthy()
-  expect(screen.getByText('Hangup')).toBeTruthy()
+  expect(await screen.findByText('Mute')).toBeInTheDocument()
+  expect(await screen.findByText('Hangup')).toBeInTheDocument()
 
-
-})
-
-test('Clicking reject, rejects the call', async () => {
-  render(<CallControlsModal />)
-  userEvent.click(screen.getByText('Make Call'))
-
-  await waitFor(() => screen.getByText('Reject'))
-  userEvent.click(screen.getByText('Reject'))
-
-  expect(reject).toBeCalledTimes(1)
-
-  await waitFor(() => screen.getByText('Make Call'))
-  expect(screen.getByText('Number')).toBeTruthy()
-
-
+  expect(screen.queryByText('Make Call')).not.toBeInTheDocument()
 })
