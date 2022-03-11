@@ -1,4 +1,4 @@
 import ReactDOM from "react-dom"
-import CallControlsModal from "./ui/CallControlsModal"
+import CallControls from "./ui/CallControls"
 
-ReactDOM.render(<CallControlsModal />, document.getElementById("root"))
+ReactDOM.render(<CallControls />, document.getElementById("root"))

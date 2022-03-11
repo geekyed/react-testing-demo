@@ -12,7 +12,7 @@ enum CallState {
   Connected = 'connected'
 }
 
-const WebRTCControlsModal = () => {
+const CallControls = () => {
   const [callState, setCallState] = useState(CallState.Idle)
 
   const acceptCall = async () => {
@@ -50,4 +50,4 @@ const WebRTCControlsModal = () => {
   )
 }
 
-export default WebRTCControlsModal
+export default CallControls
